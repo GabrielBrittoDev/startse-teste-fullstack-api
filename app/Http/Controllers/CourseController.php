@@ -20,7 +20,7 @@ class CourseController extends Controller
 
     public function index(){
         try {
-            return response()->json($this->course->paginate(15), 200);
+            return response()->json($this->course->paginate(8), 200);
         } catch (\Exception $e){
             return response()->json(['error' => ['Erro ao acessar os cursos']], 500);
         }
@@ -99,7 +99,7 @@ class CourseController extends Controller
 
     public function find(Request $request){
         try {
-            $courses =  $this->course->where('title', 'LIKE', '%'. $request->input('title') .'%')->get();
+            $courses =  $this->course->where('title', 'LIKE', '%'. $request->input('title') .'%')->paginate(8);
             if (empty($courses)){
                 return response()->json(['error' => ['Nenhum curso encontrado']], 404);
             }
